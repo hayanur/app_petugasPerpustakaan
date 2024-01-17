@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:html';
 
 import 'package:dio/dio.dart' as dio;
@@ -24,6 +25,11 @@ class LoginController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    String status = StorageProvider.read(StorageKey.status);
+    log("status : $status");
+    if(status == "logged"){ //kalau statusnya logged, langsung kita arahkan ke halaman home
+      Get.offAllNamed(Routes.HOME); //getX punya cara navigator sendiri
+    }
   }
 
   @override
@@ -36,7 +42,7 @@ class LoginController extends GetxController {
   final loadingLogin = false.obs;
 
   login() async {
-    loadingLogin(true);
+    loadingLogin(true); //cara update variabel agar diterima view
     try {
       FocusScope.of(Get.context!).unfocus();
       //unfocus-->untuk membuat keyboard nya tidak muncul di layar
